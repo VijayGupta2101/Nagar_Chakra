@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>NagarChakra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Figtree:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --sage: #6f8f72;
+            --dark: #3f5a44;
+            --cream: #f6f1e4;
+            --white: #fcfbf7;
+            --blue: #7f9db5;
+            --ink: #26342b;
+            --card: #fff;
+            --line: #e2dccb;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root {
+                --cream: #1b231e;
+                --white: #151c18;
+                --ink: #e9efe8;
+                --card: #212b25;
+                --line: #2c382f;
+                --dark: #8fb391
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 4rem
+        }
+
+        body {
+            font: 1rem/1.6 Figtree, sans-serif;
+            background: var(--white);
+            color: var(--ink)
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: Fraunces, Georgia, serif
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: .5rem
+        }
+
+        section {
+            padding: 4rem 1.2rem
+        }
+
+        .box {
+            max-width: 1050px;
+            margin: auto
+        }
+
+        .alt {
+            background: var(--cream)
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            margin-top: 1.5rem
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 1rem;
+            display: grid;
+            gap: .6rem;
+            align-content: start
+        }
+
+        .pic {
+            height: 140px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-size: 3.5rem;
+            background-size: cover;
+            background-position: center
+        }
+
+        button {
+            font: 600 .95rem Figtree, sans-serif;
+            background: var(--dark);
+            color: #fff;
+            border: 0;
+            border-radius: 99px;
+            padding: .6rem 1.2rem;
+            cursor: pointer;
+            transition: transform .2s
+        }
+
+        button:hover {
+            transform: translateY(-2px)
+        }
+
+        button.light {
+            background: var(--card);
+            color: var(--ink);
+            border: 1.5px solid var(--line)
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--line);
+            padding: .8rem 1.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem 1.2rem;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 5
+        }
+
+        header a {
+            color: var(--ink);
+            text-decoration: none;
+            margin-right: .8rem
+        }
+
+        header b {
+            font: 600 1.3rem Fraunces, serif
+        }
+
+        .hero {
+            text-align: center;
+            background: var(--cream);
+            padding: 5rem 1.2rem
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 3.8rem);
+            max-width: 15ch;
+            margin: 0 auto 1rem
+        }
+
+        .hero p {
+            max-width: 50ch;
+            margin: 0 auto 1.5rem
+        }
+
+        input,
+        select,
+        textarea {
+            font: inherit;
+            padding: .6rem;
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            background: var(--white);
+            color: var(--ink);
+            width: 100%
+        }
+
+        form {
+            display: grid;
+            gap: .8rem;
+            max-width: 480px
+        }
+
+        .bar {
+            height: 10px;
+            background: var(--line);
+            border-radius: 9px;
+            overflow: hidden
+        }
+
+        .bar i {
+            display: block;
+            height: 100%;
+            background: var(--sage)
+        }
+
+        .row {
+            display: flex;
+            gap: .6rem;
+            flex-wrap: wrap
+        }
+
+        .wish[aria-pressed="true"] {
+            background: var(--sage)
+        }
+
+        .qr {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            width: 120px;
+            background: #fff;
+            padding: 6px;
+            gap: 1px;
+            border-radius: 8px
+        }
+
+        .qr i {
+            aspect-ratio: 1;
+            background: #26342b
+        }
+
+        .qr i.o {
+            background: #fff
+        }
+
+        footer {
+            background: var(--dark);
+            color: #fff;
+            padding: 2.5rem 1.2rem
+        }
+
+        footer a {
+            color: #fff;
+            margin-right: 1rem
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                transition: none !important;
+                scroll-behavior: auto !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header><b>🌿 NagarChakra</b>
+        <nav><a href="#explore">Explore</a><a href="#studio">Studio</a><a href="#vote">Vote</a><a
+                href="#feedback">Feedback</a><a href="#kids">Children</a><a href="#impact">Impact</a></nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>A City That Evolves With Its People.</h1>
+        <p>Share a photo of a tired park, street, playground or market, see redesign ideas, and vote on what your
+            neighbourhood builds next.</p>
+        <button onclick="location.href='#studio'">Redesign a space</button>
+    </section>
+
+    <section id="explore">
+        <div class="box">
+            <h2>Explore spaces</h2>
+            <p>Places neighbours have flagged for care.</p>
+            <div class="grid" id="spaces"></div>
+        </div>
+    </section>
+
+    <section class="alt" id="studio">
+        <div class="box">
+            <h2>AI Redesign Studio</h2>
+            <p>Upload a photo to get three sample concepts (simulated for this demo).</p>
+            <div class="card" style="max-width:420px;margin-top:1rem">
+                <div class="pic" id="preview" style="background:#dfe6d9">📷</div>
+                <input type="file" id="file" accept="image/*" aria-label="Upload a space photo">
+                <button id="gen">Generate 3 concepts</button>
+            </div>
+            <div class="grid" id="concepts"></div>
+        </div>
+    </section>
+
+    <section id="vote">
+        <div class="box">
+            <h2>Compare &amp; vote</h2>
+            <p>Pick the design you like best.</p>
+            <div class="grid" id="designs"></div>
+        </div>
+    </section>
+
+    <section class="alt" id="feedback">
+        <div class="box">
+            <h2>Community feedback</h2>
+            <p>Report a problem in your neighbourhood.</p>
+            <div class="grid">
+                <form id="form"><select id="type">
+                        <option>Broken equipment</option>
+                        <option>Unsafe or dark</option>
+                        <option>Litter</option>
+                        <option>Blocked path</option>
+                    </select>
+                    <input id="place" placeholder="Where is it?"><textarea id="what" rows="3"
+                        placeholder="What is the problem?"></textarea>
+                    <button>Send report</button>
+                    <p id="msg" role="status"></p>
+                </form>
+                <div class="card">
+                    <h3>QR feedback idea</h3>
+                    <p>A sign at each space lets visitors scan and report on the spot.</p>
+                    <div class="qr" id="qr" aria-label="Sample QR code"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kids">
+        <div class="box">
+            <h2>Children's corner</h2>
+            <p>What should your play space have? Tap to choose.</p>
+            <div class="row" id="wishes" style="margin-top:1rem"></div>
+        </div>
+    </section>
+
+    <section class="alt" id="impact">
+        <div class="box">
+            <h2>Impact dashboard</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 id="n1"></h3>Community votes
+                </div>
+                <div class="card">
+                    <h3>47</h3>Spaces redesigned
+                </div>
+                <div class="card">
+                    <h3 id="n3"></h3>Citizens taking part
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="box">
+            <h3>NagarChakra</h3>
+            <p>A frontend prototype for better public spaces.</p><br>
+            <a href="#home">About</a><a href="mailto:hello@nagarchakra.example">Contact</a><a
+                href="#feedback">Community</a>
+        </div>
+    </footer>
+
+    <script>
+        const $ = id => document.getElementById(id);
+
+        // Sample data
+        const spaces = [
+            { name: 'Shivaji Garden', icon: '🌳', note: 'Dry fountain and broken benches', likes: 214, color: '#c9d8c0' },
+            { name: 'Lal Gali Crossing', icon: '🚦', note: 'No safe crossing for pedestrians', likes: 342, color: '#c8d4dd' },
+            { name: 'Little Sprouts Playground', icon: '🛝', note: 'Rusted swings, cracked flooring', likes: 287, color: '#eadfc4' },
+            { name: 'Subzi Mandi Lane', icon: '🧺', note: 'Torn awnings and poor drainage', likes: 176, color: '#e8d3c8' }
+        ];
+        const designs = [
+            { name: 'Green Commons', icon: '🌿', green: 92, access: 70, cost: 6.5, votes: 41 },
+            { name: 'Accessible Plaza', icon: '♿', green: 74, access: 95, cost: 9.8, votes: 28 },
+            { name: 'Budget Refresh', icon: '🪴', green: 58, access: 82, cost: 3.2, votes: 19 }
+        ];
+        const wishes = ['🛝 Slide', '🌳 Shady trees', '🌻 Flowers', '⛲ Water play', '⚽ Ball court', '📚 Reading nook'];
+        let myVote = -1, reports = 0, photo = '';
+
+        // Small helpers
+        const bar = pct => `<div class="bar"><i style="width:${pct}%"></i></div>`;
+        const pic = (d, bg) => `<div class="pic" style="background:${bg || '#dfe6d9'}">${d}</div>`;
+
+        // Explore spaces
+        function showSpaces() {
+            $('spaces').innerHTML = spaces.map((s, i) => `
+    <div class="card">${pic(s.icon, s.color)}<h3>${s.name}</h3><p>${s.note}</p>
+    <div class="row"><button onclick="support(${i})">Support (${s.likes})</button>
+    <button class="light" onclick="location.href='#studio'">Redesign</button></div></div>`).join('');
+        }
+        function support(i) { spaces[i].likes++; showSpaces(); showImpact(); }
+
+        // Studio: upload and simulated concepts
+        $('file').onchange = e => {
+            const f = e.target.files[0];
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                photo = reader.result;
+                $('preview').style.backgroundImage = `url(${photo})`;
+                $('preview').textContent = '';
+            };
+            reader.readAsDataURL(f);
+        };
+        $('gen').onclick = () => {
+            const tints = ['#6f8f7266', '#7f9db566', '#e0b86a66'];
+            $('concepts').innerHTML = designs.map((d, i) => `
+    <div class="card"><div class="pic" style="${photo ? `background-image:linear-gradient(${tints[i]},${tints[i]}),url(${photo})` : 'background:#dfe6d9'}">${photo ? '' : d.icon}</div>
+    <h3>${d.name}</h3><p>Greenery ${d.green}% · Access ${d.access}% · ₹${d.cost} lakh</p></div>`).join('');
+        };
+
+        // Compare and vote
+        function showDesigns() {
+            $('designs').innerHTML = designs.map((d, i) => `
+    <div class="card">${pic(d.icon)}<h3>${d.name}</h3>
+    Greenery ${d.green}%${bar(d.green)}
+    Accessibility ${d.access}%${bar(d.access)}
+    Cost ₹${d.cost} lakh${bar(d.cost / 10 * 100)}
+    <p>${d.votes + (myVote === i ? 1 : 0)} votes</p>
+    <button onclick="vote(${i})">${myVote === i ? 'Your vote ✓' : 'Vote'}</button></div>`).join('');
+        }
+        function vote(i) { myVote = myVote === i ? -1 : i; showDesigns(); showImpact(); }
+
+        // Feedback form and QR
+        $('form').onsubmit = e => {
+            e.preventDefault();
+            if (!$('place').value.trim() || !$('what').value.trim()) {
+                $('msg').textContent = 'Please fill in the location and the problem.';
+                return;
+            }
+            reports++;
+            $('msg').textContent = 'Thanks! Your report was sent.';
+            e.target.reset();
+            showImpact();
+        };
+        $('qr').innerHTML = Array.from({ length: 81 }, (_, i) => `<i class="${(i * 7 + i % 5) % 3 ? '' : 'o'}"></i>`).join('');
+
+        // Children's corner
+        let picked = [];
+        function showWishes() {
+            $('wishes').innerHTML = wishes.map((w, i) =>
+                `<button class="wish" aria-pressed="${picked.includes(i)}" onclick="wish(${i})">${w}</button>`).join('');
+        }
+        function wish(i) {
+            picked = picked.includes(i) ? picked.filter(x => x !== i) : [...picked, i];
+            showWishes();
+        }
+
+        // Impact
+        function showImpact() {
+            const totalVotes = designs.reduce((s, d) => s + d.votes, 0) + (myVote >= 0 ? 1 : 0);
+            $('n1').textContent = (12800 + totalVotes).toLocaleString('en-IN');
+            $('n3').textContent = (3260 + reports + totalVotes).toLocaleString('en-IN');
+        }
+
+        showSpaces(); showDesigns(); showWishes(); showImpact();
+    </script>
+</body>
+
+</html>
